@@ -86,7 +86,7 @@ public class PopController: NSObject {
     public init(viewController: UIViewController) {
         self.topViewController = viewController
         super.init()
-        
+        PopController.retainedPopControllers.insert(self)
         viewController.popController = self
         
         setup()

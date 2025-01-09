@@ -154,7 +154,12 @@ extension UIViewController {
             return objc_getAssociatedObject(self, &AssociatedKeys.popControllerKey) as? PopController
         }
         set {
-            objc_setAssociatedObject(self, &AssociatedKeys.popControllerKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(
+                self,
+                &AssociatedKeys.popControllerKey,
+                newValue,
+                .OBJC_ASSOCIATION_ASSIGN
+            )
         }
     }
 }
