@@ -1,6 +1,0 @@
-framework module PopControllerSwift {
-  umbrella header "PopControllerSwift-umbrella.h"
-
-  export *
-  module * { export * }
-}
