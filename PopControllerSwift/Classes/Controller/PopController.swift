@@ -8,6 +8,38 @@
 import Foundation
 import UIKit
 
+/// PopController manages the presentation and dismissal of custom view controllers in a popup style.
+///
+/// This controller provides various animation styles and positioning options for presenting view controllers
+/// in a popup manner. It also handles keyboard events and screen rotation automatically.
+///
+/// # Important Notes
+/// When dismissing the popup in your custom view controller, you must use one of these methods:
+/// ```swift
+/// // Option 1: Using dismissPop
+/// dismissPop(animated: true) {
+///     // Your completion handler
+/// }
+///
+/// // Option 2: Using popController directly
+/// popController?.dismiss(completion: {
+///     // Your completion handler
+/// })
+/// ```
+///
+/// # Implementation Note
+/// Unlike Objective-C, Swift doesn't support method swizzling out of the box, which makes it impossible
+/// to automatically intercept and override the standard UIKit `dismiss(animated:completion:)` method.
+/// This is why we need to explicitly use our custom dismiss methods to ensure proper cleanup and
+/// memory management. While this approach may seem less elegant than automatic method interception,
+/// it provides better type safety and code clarity.
+///
+/// # Features
+/// - Multiple animation styles for presentation and dismissal
+/// - Customizable positioning and offset
+/// - Automatic keyboard handling
+/// - Background touch dismissal
+/// - Safe area support
 public class PopController: NSObject {
     
     // MARK: - Static Properties

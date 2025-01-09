@@ -36,6 +36,13 @@ class HWTopBarController: UIViewController {
     
     @objc
     func dismissAction() {
-        self.dismiss(animated: true, completion: nil)
+        dismissPop(animated: true) {
+            
+        }
+        
+    }
+    
+    deinit {
+        print("topVC deinit")
     }
 }

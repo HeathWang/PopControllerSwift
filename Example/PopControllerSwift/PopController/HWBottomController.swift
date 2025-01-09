@@ -63,8 +63,13 @@ class HWBottomAuthViewController : UIViewController {
     
     @objc
     func onClickAction() {
-        self.dismiss(animated: true) {
+        popController?.dismiss(completion: {
             
-        }
+        })
+
+    }
+    
+    deinit {
+        print("bottomVC deinit")
     }
 }
