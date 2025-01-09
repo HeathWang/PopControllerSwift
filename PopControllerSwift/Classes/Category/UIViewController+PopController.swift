@@ -80,56 +80,56 @@ public extension UIViewController {
     }
     
     @discardableResult
-    func popup() -> PopController {
-        return popupWith(popType: .growIn,
-                        dismissType: .fadeOut,
-                        position: .center,
-                        inViewController: UIViewController.getTopMostViewController(),
-                        dismissOnBackgroundTouch: true)
+    func present(asPopup: Bool = true) -> PopController {
+        return present(using: .growIn,
+                      dismissWith: .fadeOut,
+                      at: .center,
+                      in: UIViewController.getTopMostViewController(),
+                      dismissOnBackgroundTouch: true)
     }
     
     @discardableResult
-    func popupWith(popType: PopType, dismissType: DismissType) -> PopController {
-        return popupWith(popType: popType,
-                        dismissType: dismissType,
-                        position: .center)
+    func present(using popType: PopType, dismissWith dismissType: DismissType) -> PopController {
+        return present(using: popType,
+                      dismissWith: dismissType,
+                      at: .center)
     }
     
     @discardableResult
-    func popupWith(popType: PopType,
-                   dismissType: DismissType,
-                   position: PopPosition) -> PopController {
-        return popupWith(popType: popType,
-                        dismissType: dismissType,
-                        position: position,
-                        inViewController: UIViewController.getTopMostViewController(),
-                        dismissOnBackgroundTouch: true)
+    func present(using popType: PopType,
+                 dismissWith dismissType: DismissType,
+                 at position: PopPosition) -> PopController {
+        return present(using: popType,
+                      dismissWith: dismissType,
+                      at: position,
+                      in: UIViewController.getTopMostViewController(),
+                      dismissOnBackgroundTouch: true)
     }
     
     @discardableResult
-    func popupWith(popType: PopType,
-                   dismissType: DismissType,
-                   position: PopPosition,
-                   dismissOnBackgroundTouch: Bool) -> PopController {
-        return popupWith(popType: popType,
-                        dismissType: dismissType,
-                        position: position,
-                        inViewController: UIViewController.getTopMostViewController(),
-                        dismissOnBackgroundTouch: dismissOnBackgroundTouch)
+    func present(using popType: PopType,
+                 dismissWith dismissType: DismissType,
+                 at position: PopPosition,
+                 dismissOnBackgroundTouch: Bool) -> PopController {
+        return present(using: popType,
+                      dismissWith: dismissType,
+                      at: position,
+                      in: UIViewController.getTopMostViewController(),
+                      dismissOnBackgroundTouch: dismissOnBackgroundTouch)
     }
     
     @discardableResult
-    func popupWith(popType: PopType,
-                   dismissType: DismissType,
-                   position: PopPosition,
-                   inViewController: UIViewController,
-                   dismissOnBackgroundTouch: Bool) -> PopController {
-        let popController = PopController(viewController: self)
+    func present(using popType: PopType,
+                 dismissWith dismissType: DismissType,
+                 at position: PopPosition,
+                 in viewController: UIViewController,
+                 dismissOnBackgroundTouch: Bool) -> PopController {
+        let popController = PopController(presenting: self)
         popController.popType = popType
         popController.dismissType = dismissType
         popController.popPosition = position
         popController.shouldDismissOnBackgroundTouch = dismissOnBackgroundTouch
-        popController.present(in: inViewController)
+        popController.present(in: viewController)
         return popController
     }
     

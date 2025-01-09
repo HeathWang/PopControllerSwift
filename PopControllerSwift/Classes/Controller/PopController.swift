@@ -115,7 +115,7 @@ public class PopController: NSObject {
     }
     
     // MARK: - Initialization
-    public init(viewController: UIViewController) {
+    public init(presenting viewController: UIViewController) {
         self.topViewController = viewController
         super.init()
         PopController.retainedPopControllers.insert(self)

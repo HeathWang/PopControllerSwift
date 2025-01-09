@@ -69,7 +69,7 @@ extension ViewController: UITableViewDelegate {
             
             let vc = HWBottomAuthViewController()
             // init PopControllerSwift, config it, finally present it.
-            let popVC = PopController(viewController: vc)
+            let popVC = PopController(presenting: vc)
             popVC.popPosition = .bottom
             popVC.popType = .bounceInFromBottom
             popVC.dismissType = .slideOutToBottom
@@ -79,7 +79,7 @@ extension ViewController: UITableViewDelegate {
         case 1:
 
             let vc = HWTopBarController()
-            let popVC = PopController(viewController:vc)
+            let popVC = PopController(presenting:vc)
             popVC.backgroundAlpha = 0
             popVC.popPosition = .top
             popVC.popType = .bounceInFromTop
@@ -91,17 +91,12 @@ extension ViewController: UITableViewDelegate {
             
             let fullVC = HWFullDialogController()
             // use category method to present.
-            let pop = fullVC.popupWith(
-                popType: .shrinkIn,
-                dismissType: .slideOutToBottom,
-                position: .center,
-                dismissOnBackgroundTouch: true
-            )
+            let pop = fullVC.present(using: .shrinkIn, dismissWith: .slideOutToBottom, at: .center, dismissOnBackgroundTouch: true)
             pop.containerView.layer.cornerRadius = 0
             
         case 3:
             let vc = HWAutoSizeController()
-            vc.popup()
+            vc.present()
             
 //        case 4:
 //            let nav = HWNavigationController(rootViewController: HWBaseChildController())
