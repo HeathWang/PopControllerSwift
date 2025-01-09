@@ -12,9 +12,9 @@ extension UIViewController {
     
     // MARK: - Properties
     private struct AssociatedKeys {
-        static var contentSizeInPopKey = "contentSizeInPopKey"
-        static var contentSizeInPopWhenLandscapeKey = "contentSizeInPopWhenLandscapeKey"
-        static var popControllerKey = "popControllerKey"
+        static var contentSizeInPopKey: Void?
+        static var contentSizeInPopWhenLandscapeKey: Void?
+        static var popControllerKey: Void?
     }
     
     @objc public var contentSizeInPop: CGSize {
