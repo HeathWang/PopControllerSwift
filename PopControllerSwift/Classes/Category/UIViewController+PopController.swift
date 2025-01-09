@@ -8,105 +8,7 @@
 import Foundation
 import UIKit
 
-// 添加在extension之前，用于自动执行的属性包装器
-@propertyWrapper
-struct RuntimeInitialize<T> {
-    let wrappedValue: T
-    init(wrappedValue: T) {
-        self.wrappedValue = wrappedValue
-        UIViewController.swizzleMethods()
-    }
-}
-
-// Property wrapper for associated object storage
-@propertyWrapper
-struct AssociatedObject<T> {
-    let key: UnsafeRawPointer
-    let defaultValue: T
-    
-    init(_ key: UnsafeRawPointer, defaultValue: T) {
-        self.key = key
-        self.defaultValue = defaultValue
-    }
-    
-    var wrappedValue: T {
-        get {
-            (objc_getAssociatedObject(self, key) as? T) ?? defaultValue
-        }
-        set {
-            objc_setAssociatedObject(self, key, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
-}
-
-// Move AssociatedObject wrapper outside and create a helper class
-private class AssociatedKeys {
-    static let contentSizeKey = UnsafeRawPointer(UnsafeMutablePointer<UInt8>.allocate(capacity: 1))
-    static let contentSizeLandscapeKey = UnsafeRawPointer(UnsafeMutablePointer<UInt8>.allocate(capacity: 1))
-    static let popControllerKey = UnsafeRawPointer(UnsafeMutablePointer<UInt8>.allocate(capacity: 1))
-    
-    static func getAssociatedObject<T>(_ object: Any, key: UnsafeRawPointer, defaultValue: T) -> T {
-        return (objc_getAssociatedObject(object, key) as? T) ?? defaultValue
-    }
-    
-    static func setAssociatedObject<T>(_ object: Any, key: UnsafeRawPointer, value: T) {
-        objc_setAssociatedObject(object, key, value, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-    }
-}
-
 extension UIViewController {
-    // 使用属性包装器确保方法交换的自动执行
-    @RuntimeInitialize
-    private static var swizzleToken: Void = ()
-    
-    internal static func swizzleMethods() {
-        hw_swizzleInstanceMethod(originalSel: #selector(viewDidLoad),
-                                   with: #selector(hw_viewDidLoad))
-        
-        hw_swizzleInstanceMethod(originalSel: #selector(present(_:animated:completion:)),
-                                   with: #selector(hw_present(_:animated:completion:)))
-        
-        hw_swizzleInstanceMethod(originalSel: #selector(dismiss(animated:completion:)),
-                                   with: #selector(hw_dismiss(animated:completion:)))
-    }
-    
-    // Add the swizzled methods here
-    @objc private func hw_viewDidLoad() {
-        hw_viewDidLoad()
-        
-        let contentSize: CGSize
-        switch UIApplication.shared.statusBarOrientation {
-        case .landscapeLeft, .landscapeRight:
-            contentSize = contentSizeInPopWhenLandscape.equalTo(.zero) ? contentSizeInPop : contentSizeInPopWhenLandscape
-        default:
-            contentSize = contentSizeInPop
-        }
-        
-        if !contentSize.equalTo(.zero) {
-            view.frame = CGRect(origin: .zero, size: contentSize)
-        }
-    }
-    
-    @objc private func hw_present(_ viewControllerToPresent: UIViewController,
-                                 animated flag: Bool,
-                                 completion: (() -> Void)? = nil) {
-        guard let popController = self.popController,
-              let containerViewController = popController.value(forKey: "containerViewController") as? UIViewController else {
-            hw_present(viewControllerToPresent, animated: flag, completion: completion)
-            return
-        }
-        
-        containerViewController.present(viewControllerToPresent, animated: flag, completion: completion)
-    }
-    
-    @objc private func hw_dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        guard let popController = self.popController else {
-            hw_dismiss(animated: flag, completion: completion)
-            return
-        }
-        
-        popController.dismiss(completion: completion)
-    }
     
     // MARK: - Properties
     private struct AssociatedKeys {
@@ -122,7 +24,7 @@ extension UIViewController {
         set {
             willChangeValue(forKey: "contentSizeInPop")
             var size = newValue
-            if !size.equalTo(.zero) && abs(size.width) < .ulpOfOne {
+            if (!size.equalTo(.zero) && abs(size.width) < .ulpOfOne) {
                 let orientation = UIApplication.shared.statusBarOrientation
                 let screenBounds = UIScreen.main.bounds
                 size.width = orientation.isLandscape ? screenBounds.height : screenBounds.width
@@ -139,7 +41,7 @@ extension UIViewController {
         set {
             willChangeValue(forKey: "contentSizeInPopWhenLandscape")
             var size = newValue
-            if !size.equalTo(.zero) && abs(size.width) < .ulpOfOne {
+            if (!size.equalTo(.zero) && abs(size.width) < .ulpOfOne) {
                 let orientation = UIApplication.shared.statusBarOrientation
                 let screenBounds = UIScreen.main.bounds
                 size.width = orientation.isLandscape ? screenBounds.width : screenBounds.height
@@ -166,6 +68,16 @@ extension UIViewController {
 
 // MARK: - Pop Extensions
 public extension UIViewController {
+    
+    func dismissPop(animated flag: Bool, completion: (() -> Void)? = nil) {
+        // Clean up popController if exists
+        if let popController = self.popController {
+            popController.dismiss(completion: completion)
+            return
+        }
+        
+        dismiss(animated: flag, completion: completion)
+    }
     
     @discardableResult
     func popup() -> PopController {

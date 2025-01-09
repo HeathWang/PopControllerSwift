@@ -93,7 +93,6 @@ public class PopController: NSObject {
     }
     
     deinit {
-        print("popController deinit")
         destroyObserver()
         destroyObserverForViewController(topViewController)
         PopController.retainedPopControllers.remove(self)
@@ -110,9 +109,8 @@ public class PopController: NSObject {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
-            self.setupObserver()
+            setupObserver()
             setupObserverForViewController(topViewController)
-            PopController.retainedPopControllers.insert(self)
             
             let vc = presentingViewController.tabBarController ?? presentingViewController
             
@@ -151,7 +149,7 @@ public class PopController: NSObject {
         backgroundView.frame = containerViewController.view.bounds
         
         let contentSize = contentSizeOfTopView()
-        var containerViewWidth = contentSize.width
+        let containerViewWidth = contentSize.width
         var containerViewHeight = contentSize.height
         var containerViewY: CGFloat
         
