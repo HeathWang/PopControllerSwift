@@ -74,6 +74,8 @@ extension ViewController: UITableViewDelegate {
             popVC.popType = .bounceInFromBottom
             popVC.dismissType = .slideOutToBottom
             popVC.shouldDismissOnBackgroundTouch = false
+            popVC.springConfig = SpringAnimationConfig(damping: 0.7, velocity: 0)
+            popVC.animationDuration = 0.3
             popVC.present(in: self)
             
         case 1:

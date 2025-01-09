@@ -49,6 +49,7 @@ public class PopController: NSObject {
     public var popType: PopType = .growIn
     public var dismissType: DismissType = .fadeOut
     public var animationDuration: TimeInterval = 0.2
+    public var springConfig = SpringAnimationConfig(damping: 0.8, velocity: 10.0)
     public var popPosition: PopPosition = .center
     public var positionOffset: CGPoint = .zero
     public weak var animationProtocol: PopControllerAnimationProtocol?

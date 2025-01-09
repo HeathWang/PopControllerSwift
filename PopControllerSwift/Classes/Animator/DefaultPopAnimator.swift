@@ -1,12 +1,10 @@
 import UIKit
 
-private let kDefaultSpringDamping: CGFloat = 0.8
-private let kDefaultSpringVelocity: CGFloat = 10.0
-
 public class DefaultPopAnimator: NSObject, PopControllerAnimationProtocol {
     
     public var popType: PopType = .none
     public var dismissType: DismissType = .none
+    
     
     public func popControllerAnimationDuration(_ context: PopAnimationContext) -> TimeInterval {
         return context.duration > 0 ? context.duration : 0.2
@@ -15,6 +13,7 @@ public class DefaultPopAnimator: NSObject, PopControllerAnimationProtocol {
     public func popAnimate(_ context: PopAnimationContext, completion: @escaping (Bool) -> Void) {
         let duration = popControllerAnimationDuration(context)
         let containerView = context.containerView
+        let springConfig = context.springAnimationConfig
         
         switch popType {
         case .fadeIn:
@@ -116,8 +115,8 @@ public class DefaultPopAnimator: NSObject, PopControllerAnimationProtocol {
             containerView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
             UIView.animate(withDuration: duration,
                          delay: 0,
-                         usingSpringWithDamping: kDefaultSpringDamping,
-                         initialSpringVelocity: kDefaultSpringVelocity) {
+                           usingSpringWithDamping: springConfig.damping,
+                           initialSpringVelocity: springConfig.velocity) {
                 containerView.alpha = 1
                 containerView.transform = .identity
             } completion: { finished in
@@ -133,8 +132,8 @@ public class DefaultPopAnimator: NSObject, PopControllerAnimationProtocol {
             containerView.frame = rect
             UIView.animate(withDuration: duration,
                          delay: 0,
-                         usingSpringWithDamping: kDefaultSpringDamping,
-                         initialSpringVelocity: kDefaultSpringVelocity) {
+                           usingSpringWithDamping: springConfig.damping,
+                           initialSpringVelocity: springConfig.velocity) {
                 containerView.frame = originFrame
             } completion: { finished in
                 completion(finished)
@@ -149,8 +148,8 @@ public class DefaultPopAnimator: NSObject, PopControllerAnimationProtocol {
             containerView.frame = rect
             UIView.animate(withDuration: duration,
                          delay: 0,
-                         usingSpringWithDamping: kDefaultSpringDamping,
-                         initialSpringVelocity: kDefaultSpringVelocity) {
+                           usingSpringWithDamping: springConfig.damping,
+                           initialSpringVelocity: springConfig.velocity) {
                 containerView.frame = originFrame
             } completion: { finished in
                 completion(finished)
@@ -165,8 +164,8 @@ public class DefaultPopAnimator: NSObject, PopControllerAnimationProtocol {
             containerView.frame = rect
             UIView.animate(withDuration: duration,
                          delay: 0,
-                         usingSpringWithDamping: kDefaultSpringDamping,
-                         initialSpringVelocity: kDefaultSpringVelocity) {
+                           usingSpringWithDamping: springConfig.damping,
+                           initialSpringVelocity: springConfig.velocity) {
                 containerView.frame = originFrame
             } completion: { finished in
                 completion(finished)
@@ -181,8 +180,8 @@ public class DefaultPopAnimator: NSObject, PopControllerAnimationProtocol {
             containerView.frame = rect
             UIView.animate(withDuration: duration,
                          delay: 0,
-                         usingSpringWithDamping: kDefaultSpringDamping,
-                         initialSpringVelocity: kDefaultSpringVelocity) {
+                           usingSpringWithDamping: springConfig.damping,
+                           initialSpringVelocity: springConfig.velocity) {
                 containerView.frame = originFrame
             } completion: { finished in
                 completion(finished)

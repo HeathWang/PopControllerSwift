@@ -25,6 +25,7 @@ class PopControllerAnimatedTransitioning: NSObject, UIViewControllerAnimatedTran
         
         // Set animation duration from popController
         self.animationContext.duration = popController.animationDuration
+        self.animationContext.springAnimationConfig = popController.springConfig
         
         // Initialize animator
         if let customAnimator = popController.animationProtocol {

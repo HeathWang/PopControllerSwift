@@ -53,3 +53,13 @@ public enum DismissType: Int {
     case bounceOutToLeft
     case bounceOutToRight
 }
+
+public struct SpringAnimationConfig {
+    public var damping: CGFloat
+    public var velocity: CGFloat
+    
+    public init(damping: CGFloat, velocity: CGFloat) {
+        self.damping = damping
+        self.velocity = velocity
+    }
+}
