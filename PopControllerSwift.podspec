@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'PopControllerSwift'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'A short description of PopControllerSwift.'
 
   s.description      = <<-DESC
