@@ -1,11 +1,11 @@
 # PopControllerSwift
 
-[![CI Status](https://img.shields.io/travis/HeathWang/PopControllerSwift.svg?style=flat)](https://travis-ci.org/HeathWang/PopControllerSwift)
 [![Version](https://img.shields.io/cocoapods/v/PopControllerSwift.svg?style=flat)](https://cocoapods.org/pods/PopControllerSwift)
 [![License](https://img.shields.io/cocoapods/l/PopControllerSwift.svg?style=flat)](https://cocoapods.org/pods/PopControllerSwift)
 [![Platform](https://img.shields.io/cocoapods/p/PopControllerSwift.svg?style=flat)](https://cocoapods.org/pods/PopControllerSwift)
 
 This is a project converted from Objective-C to pure Swift. Original project: https://github.com/HeathWang/HWPopController
+
 I used AI to convert most of the functionality from OC to Swift, spending about 5 hours in total for conversion, debugging, bug fixing, and release.
 
 ## Screen Shot
