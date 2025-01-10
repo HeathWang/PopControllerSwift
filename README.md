@@ -36,7 +36,7 @@ PopControllerSwift is available through [CocoaPods](https://cocoapods.org). To i
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'PopControllerSwift', '~> 1.0.1'
+pod 'PopControllerSwift', '~> 1.0.2'
 ```
 
 ## Author
