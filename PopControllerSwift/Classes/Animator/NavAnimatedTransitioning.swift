@@ -2,11 +2,15 @@ import UIKit
 
 class NavAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
     
-    private let state: PopState
+    private var state: PopState
     
     init(state: PopState) {
         self.state = state
         super.init()
+    }
+    
+    public func setState(_ state: PopState) {
+        self.state = state
     }
     
     // MARK: - UIViewControllerAnimatedTransitioning

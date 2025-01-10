@@ -10,13 +10,14 @@ import Foundation
 import SnapKit
 import PopControllerSwift
 
-class HWNavigationController: UINavigationController {
+class HWNavigationController: PopNavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let rect = UIScreen.main.bounds
         contentSizeInPop = CGSize(width: rect.width - 60, height: rect.height * 0.6)
         contentSizeInPopWhenLandscape = CGSize(width: rect.height - 100, height: rect.width * 0.6)
+        useSystemAnimatedTransitioning = true
     }
 }
 

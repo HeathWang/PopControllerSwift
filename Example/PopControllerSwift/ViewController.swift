@@ -100,9 +100,10 @@ extension ViewController: UITableViewDelegate {
             let vc = HWAutoSizeController()
             vc.present()
             
-//        case 4:
-//            let nav = HWNavigationController(rootViewController: HWBaseChildController())
-//            nav.popup(with: .slideInFromTop, dismissType: .slideOutToBottom)
+        case 4:
+            let nav = HWNavigationController(rootViewController: HWBaseChildController())
+            nav.present(using: .growIn, dismissWith: .bounceOutToBottom, at: .bottom)
+            
         default: break
             
         }
