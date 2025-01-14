@@ -103,7 +103,6 @@ public class PopController: NSObject {
     // MARK: - Public Readonly Properties
     private(set) public var containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
         view.clipsToBounds = true
         view.layer.cornerRadius = 8
         return view
@@ -429,4 +428,52 @@ extension PopController {
 
 fileprivate class PopContainerViewController: UIViewController {
     
+}
+
+public extension PopController {
+    static func create(with viewController: UIViewController) -> PopController {
+        return PopController(presenting: viewController)
+    }
+    
+    static func create(with viewController: UIViewController, 
+                      popType: PopType = .growIn,
+                      dismissType: DismissType = .fadeOut) -> PopController {
+        let controller = PopController(presenting: viewController)
+        controller.popType = popType
+        controller.dismissType = dismissType
+        return controller
+    }
+    
+    @discardableResult
+    func configure(_ block: (PopController) -> Void) -> PopController {
+        block(self)
+        return self
+    }
+    
+    @discardableResult
+    func position(_ position: PopPosition, offset: CGPoint = .zero) -> PopController {
+        popPosition = position
+        positionOffset = offset
+        return self
+    }
+    
+    @discardableResult
+    func animation(popType: PopType, dismissType: DismissType) -> PopController {
+        self.popType = popType
+        self.dismissType = dismissType
+        return self
+    }
+    
+    @discardableResult
+    func background(color: UIColor, alpha: CGFloat) -> PopController {
+        backgroundView.backgroundColor = color.withAlphaComponent(alpha)
+        backgroundAlpha = alpha
+        return self
+    }
+    
+    @discardableResult
+    func dismissOnBackgroundTouch(_ should: Bool) -> PopController {
+        shouldDismissOnBackgroundTouch = should
+        return self
+    }
 }
